@@ -1,18 +1,18 @@
-﻿using RokuDotNet.Client;
+﻿using CrossInterfaceRokuDeviceDiscovery;
+using RokuDotNet.Client;
 using RokuDotNet.Client.Apps;
 using RokuDotNet.Client.Input;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
+using System.Net;
+using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace RokuRemote {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Using default names from Windows Forms designer")]
     public partial class Form1 : Form {
         public record Roku(IRokuDevice Device, DeviceInfo Info) : IRokuDevice {
             public IRokuDeviceInput Input => Device.Input;
@@ -35,34 +35,31 @@ namespace RokuRemote {
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e) {
-            using (var dialog = new Form2()) {
-                if (dialog.ShowDialog(this) == DialogResult.OK) {
-                    comboBox1.Items.Clear();
-                    comboBox1.Enabled = false;
+        private async void Form1_Shown(object sender, EventArgs e) {
+            var tokenSource = new CancellationTokenSource();
+            tokenSource.CancelAfter(TimeSpan.FromSeconds(15));
 
-                    var client = dialog.CreateDeviceDiscoveryClientFromSelectedOptions();
+            var addresses = Dns.GetHostEntry(Dns.GetHostName())
+                .AddressList
+                .Where(ip => ip.AddressFamily == AddressFamily.InterNetwork)
+                .ToList();
+            var client = new CrossInterfaceRokuDeviceDiscoveryClient(addresses);
 
-                    var tokenSource = new CancellationTokenSource();
-                    tokenSource.CancelAfter(TimeSpan.FromSeconds(15));
+            try {
+                await client.DiscoverDevicesAsync(async ctx => {
+                    var info = await ctx.Device.GetDeviceInfoAsync();
+                    var roku = new Roku(ctx.Device, info);
 
-                    try {
-                        client.DiscoverDevicesAsync(async ctx => {
-                            var info = await ctx.Device.GetDeviceInfoAsync();
-                            var roku = new Roku(ctx.Device, info);
+                    this.BeginInvoke(new Action(() => {
+                        comboBox1.Items.Add(roku);
+                        if (comboBox1.SelectedIndex == -1)
+                            comboBox1.SelectedIndex = 0;
+                        comboBox1.Enabled = true;
+                    }));
 
-                            this.BeginInvoke(new Action(() => {
-                                comboBox1.Items.Add(roku);
-                                if (comboBox1.SelectedIndex == -1)
-                                    comboBox1.SelectedIndex = 0;
-                                comboBox1.Enabled = true;
-                            }));
-
-                            return false;
-                        }, tokenSource.Token);
-                    } catch (TaskCanceledException ex) when (ex.CancellationToken == tokenSource.Token) { }
-                }
-            }
+                    return false;
+                }, tokenSource.Token);
+            } catch (TaskCanceledException ex) when (ex.CancellationToken == tokenSource.Token) { }
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e) {
