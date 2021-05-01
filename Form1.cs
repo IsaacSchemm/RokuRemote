@@ -15,11 +15,12 @@ using System.Windows.Forms;
 namespace RokuRemote {
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Using default names from Windows Forms designer")]
     public partial class Form1 : Form {
-        public record Roku(IRokuDevice Device, DeviceInfo Info) : IRokuDevice {
+        public record Roku(IHttpRokuDevice Device, DeviceInfo Info) : IHttpRokuDevice {
             public IRokuDeviceInput Input => Device.Input;
             public string Id => Device.Id;
             public IRokuDeviceApps Apps => Device.Apps;
             IRokuDeviceInput IRokuDevice.Input => Device.Input;
+            public Uri Location => Device.Location;
 
             Task<DeviceInfo> IRokuDevice.GetDeviceInfoAsync(CancellationToken _) {
                 return Task.FromResult(Info);
@@ -30,7 +31,7 @@ namespace RokuRemote {
             public override string ToString() => $"{Info.UserDeviceName} ({Info.ModelName})";
         }
 
-        public IRokuDevice CurrentDevice => comboBox1.SelectedItem as IRokuDevice;
+        public IHttpRokuDevice CurrentDevice => comboBox1.SelectedItem as IHttpRokuDevice;
 
         private bool keyboardControlEnabled => checkBox1.Checked;
 
@@ -54,14 +55,16 @@ namespace RokuRemote {
 
             try {
                 await client.DiscoverDevicesAsync(async ctx => {
-                    var info = await ctx.Device.GetDeviceInfoAsync();
-                    var roku = new Roku(ctx.Device, info);
+                    if (ctx.Device is IHttpRokuDevice h) {
+                        var info = await ctx.Device.GetDeviceInfoAsync();
+                        var roku = new Roku(h, info);
 
-                    this.BeginInvoke(new Action(() => {
-                        comboBox1.Items.Add(roku);
-                        if (comboBox1.SelectedIndex == -1)
-                            comboBox1.SelectedIndex = 0;
-                    }));
+                        this.BeginInvoke(new Action(() => {
+                            comboBox1.Items.Add(roku);
+                            if (comboBox1.SelectedIndex == -1)
+                                comboBox1.SelectedIndex = 0;
+                        }));
+                    }
 
                     return false;
                 }, tokenSource.Token);
@@ -195,6 +198,21 @@ namespace RokuRemote {
 
             if (!char.IsControl(e.KeyChar))
                 await CurrentDevice.Input.KeyPressAsync(new PressedKey(e.KeyChar));
+        }
+
+        private async void button1_Click(object sender, EventArgs e) {
+            if (CurrentDevice == null)
+                return;
+
+            try {
+                var req = WebRequest.CreateHttp(new Uri(CurrentDevice.Location, $"/input/15985?t=v&u={WebUtility.UrlEncode(textBox1.Text)}&k=(null)"));
+                req.Method = "POST";
+                req.UserAgent = "RokuRemote/1.0 (https://www.github.com/IsaacSchemm/RokuRemote)";
+                using var resp = await req.GetResponseAsync();
+            } catch (Exception ex) {
+                Console.Error.WriteLine(ex);
+                MessageBox.Show(this, "Could not send media to the device.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
