@@ -32,8 +32,14 @@ namespace RokuRemote {
 
         public IRokuDevice CurrentDevice => comboBox1.SelectedItem as IRokuDevice;
 
+        private bool keyboardControlEnabled => checkBox1.Checked;
+
         public Form1() {
             InitializeComponent();
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e) {
+            comboBox1.Focus();
         }
 
         private async void Form1_Shown(object sender, EventArgs e) {
@@ -55,7 +61,6 @@ namespace RokuRemote {
                         comboBox1.Items.Add(roku);
                         if (comboBox1.SelectedIndex == -1)
                             comboBox1.SelectedIndex = 0;
-                        comboBox1.Enabled = true;
                     }));
 
                     return false;
@@ -117,13 +122,24 @@ namespace RokuRemote {
 
         private static PressedKey? ToKey(Keys k) {
             return k switch {
+                Keys.Escape => new PressedKey(SpecialKeys.Back),
+                Keys.Home => new PressedKey(SpecialKeys.Home),
+
                 Keys.Up => new PressedKey(SpecialKeys.Up),
                 Keys.Down => new PressedKey(SpecialKeys.Down),
                 Keys.Left => new PressedKey(SpecialKeys.Left),
                 Keys.Right => new PressedKey(SpecialKeys.Right),
                 Keys.Enter => new PressedKey(SpecialKeys.Select),
+
                 Keys.Back => new PressedKey(SpecialKeys.Backspace),
-                Keys.Escape => new PressedKey(SpecialKeys.Back),
+
+                Keys.Apps => new PressedKey(SpecialKeys.Info),
+
+                Keys.Pause => new PressedKey(SpecialKeys.Play),
+
+                Keys.MediaPreviousTrack => new PressedKey(SpecialKeys.Reverse),
+                Keys.MediaPlayPause => new PressedKey(SpecialKeys.Play),
+                Keys.MediaNextTrack => new PressedKey(SpecialKeys.Forward),
                 _ => null,
             };
         }
@@ -134,9 +150,10 @@ namespace RokuRemote {
         private async void Form1_KeyDown(object sender, KeyEventArgs e) {
             if (CurrentDevice == null)
                 return;
-            if (!checkBox1.Checked)
+            if (!keyboardControlEnabled)
                 return;
 
+            this.Enabled = false;
             await keyLock.WaitAsync();
             try {
                 if (ToKey(e.KeyCode) is PressedKey p && !pressedKeys.Contains(p)) {
@@ -149,13 +166,14 @@ namespace RokuRemote {
                 Console.Error.WriteLine(ex);
             } finally {
                 keyLock.Release();
+                this.Enabled = true;
             }
         }
 
         private async void Form1_KeyUp(object sender, KeyEventArgs e) {
             if (CurrentDevice == null)
                 return;
-            if (!checkBox1.Checked)
+            if (!keyboardControlEnabled)
                 return;
 
             await keyLock.WaitAsync();
@@ -176,7 +194,7 @@ namespace RokuRemote {
         private async void Form1_KeyPress(object sender, KeyPressEventArgs e) {
             if (CurrentDevice == null)
                 return;
-            if (!checkBox1.Checked)
+            if (!keyboardControlEnabled)
                 return;
 
             e.Handled = true;
