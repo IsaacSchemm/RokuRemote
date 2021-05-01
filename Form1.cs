@@ -3,6 +3,7 @@ using RokuDotNet.Client;
 using RokuDotNet.Client.Apps;
 using RokuDotNet.Client.Input;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Net;
@@ -64,7 +65,6 @@ namespace RokuRemote {
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e) {
             tableLayoutPanel1.Enabled = CurrentDevice != null;
-            textBox1.Enabled = CurrentDevice != null;
         }
 
         private async void button2_Click(object sender, EventArgs e) {
@@ -115,51 +115,74 @@ namespace RokuRemote {
             await CurrentDevice.Input.KeyPressAsync(new PressedKey(SpecialKeys.Forward));
         }
 
-        private async void textBox1_KeyPress(object sender, KeyPressEventArgs e) {
-            e.Handled = true;
-
-            System.Diagnostics.Debug.WriteLine((int)e.KeyChar);
-
-            if (CurrentDevice == null) return;
-
-            if (char.IsControl(e.KeyChar)) return;
-
-            await CurrentDevice.Input.KeyPressAsync(new PressedKey(e.KeyChar));
+        private static PressedKey? ToKey(Keys k) {
+            return k switch {
+                Keys.Up => new PressedKey(SpecialKeys.Up),
+                Keys.Down => new PressedKey(SpecialKeys.Down),
+                Keys.Left => new PressedKey(SpecialKeys.Left),
+                Keys.Right => new PressedKey(SpecialKeys.Right),
+                Keys.Enter => new PressedKey(SpecialKeys.Select),
+                Keys.Back => new PressedKey(SpecialKeys.Backspace),
+                Keys.Escape => new PressedKey(SpecialKeys.Back),
+                _ => null,
+            };
         }
 
-        private async void textBox1_KeyDown(object sender, KeyEventArgs e) {
-            if (CurrentDevice == null) return;
+        private static readonly HashSet<PressedKey> pressedKeys = new();
+        private static readonly SemaphoreSlim keyLock = new(1, 1);
 
-            switch (e.KeyCode) {
-                case Keys.Up:
+        private async void Form1_KeyDown(object sender, KeyEventArgs e) {
+            if (CurrentDevice == null)
+                return;
+            if (!checkBox1.Checked)
+                return;
+
+            await keyLock.WaitAsync();
+            try {
+                if (ToKey(e.KeyCode) is PressedKey p && !pressedKeys.Contains(p)) {
                     e.Handled = true;
-                    await CurrentDevice.Input.KeyPressAsync(new PressedKey(SpecialKeys.Up));
-                    break;
-                case Keys.Down:
-                    e.Handled = true;
-                    await CurrentDevice.Input.KeyPressAsync(new PressedKey(SpecialKeys.Down));
-                    break;
-                case Keys.Left:
-                    e.Handled = true;
-                    await CurrentDevice.Input.KeyPressAsync(new PressedKey(SpecialKeys.Left));
-                    break;
-                case Keys.Right:
-                    e.Handled = true;
-                    await CurrentDevice.Input.KeyPressAsync(new PressedKey(SpecialKeys.Right));
-                    break;
-                case Keys.Enter:
-                    e.Handled = true;
-                    await CurrentDevice.Input.KeyPressAsync(new PressedKey(SpecialKeys.Select));
-                    break;
-                case Keys.Back:
-                    e.Handled = true;
-                    await CurrentDevice.Input.KeyPressAsync(new PressedKey(SpecialKeys.Backspace));
-                    break;
-                case Keys.Escape:
-                    e.Handled = true;
-                    await CurrentDevice.Input.KeyPressAsync(new PressedKey(SpecialKeys.Back));
-                    break;
+                    pressedKeys.Add(p);
+                    await CurrentDevice.Input.KeyDownAsync(p);
+                }
+            } catch (Exception ex) {
+                System.Diagnostics.Debug.WriteLine(ex);
+                Console.Error.WriteLine(ex);
+            } finally {
+                keyLock.Release();
             }
+        }
+
+        private async void Form1_KeyUp(object sender, KeyEventArgs e) {
+            if (CurrentDevice == null)
+                return;
+            if (!checkBox1.Checked)
+                return;
+
+            await keyLock.WaitAsync();
+            try {
+                if (ToKey(e.KeyCode) is PressedKey p && pressedKeys.Contains(p)) {
+                    e.Handled = true;
+                    pressedKeys.Remove(p);
+                    await CurrentDevice.Input.KeyUpAsync(p);
+                }
+            } catch (Exception ex) {
+                System.Diagnostics.Debug.WriteLine(ex);
+                Console.Error.WriteLine(ex);
+            } finally {
+                keyLock.Release();
+            }
+        }
+
+        private async void Form1_KeyPress(object sender, KeyPressEventArgs e) {
+            if (CurrentDevice == null)
+                return;
+            if (!checkBox1.Checked)
+                return;
+
+            e.Handled = true;
+
+            if (!char.IsControl(e.KeyChar))
+                await CurrentDevice.Input.KeyPressAsync(new PressedKey(e.KeyChar));
         }
     }
 }

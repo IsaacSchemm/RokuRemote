@@ -26,20 +26,19 @@ namespace RokuRemote {
         private void InitializeComponent() {
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.button13 = new System.Windows.Forms.Button();
-            this.button12 = new System.Windows.Forms.Button();
-            this.button11 = new System.Windows.Forms.Button();
-            this.button10 = new System.Windows.Forms.Button();
-            this.button9 = new System.Windows.Forms.Button();
-            this.button8 = new System.Windows.Forms.Button();
-            this.button7 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.button13 = new System.Windows.Forms.Label();
+            this.button12 = new System.Windows.Forms.Label();
+            this.button11 = new System.Windows.Forms.Label();
+            this.button10 = new System.Windows.Forms.Label();
+            this.button9 = new System.Windows.Forms.Label();
+            this.button8 = new System.Windows.Forms.Label();
+            this.button7 = new System.Windows.Forms.Label();
+            this.button6 = new System.Windows.Forms.Label();
+            this.button5 = new System.Windows.Forms.Label();
+            this.button4 = new System.Windows.Forms.Label();
+            this.button3 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Label();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -85,189 +84,183 @@ namespace RokuRemote {
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(260, 279);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(260, 278);
             this.tableLayoutPanel1.TabIndex = 2;
             // 
             // button13
             // 
             this.button13.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button13.Font = new System.Drawing.Font("Webdings", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.button13.Location = new System.Drawing.Point(175, 233);
+            this.button13.Location = new System.Drawing.Point(175, 230);
             this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(82, 43);
+            this.button13.Size = new System.Drawing.Size(82, 48);
             this.button13.TabIndex = 17;
             this.button13.Text = "8";
-            this.button13.UseVisualStyleBackColor = true;
+            this.button13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.button13.Click += new System.EventHandler(this.button13_Click);
             // 
             // button12
             // 
             this.button12.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button12.Font = new System.Drawing.Font("Webdings", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.button12.Location = new System.Drawing.Point(89, 233);
+            this.button12.Location = new System.Drawing.Point(89, 230);
             this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(80, 43);
+            this.button12.Size = new System.Drawing.Size(80, 48);
             this.button12.TabIndex = 16;
             this.button12.Text = ";";
-            this.button12.UseVisualStyleBackColor = true;
+            this.button12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.button12.Click += new System.EventHandler(this.button12_Click);
             // 
             // button11
             // 
             this.button11.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button11.Font = new System.Drawing.Font("Webdings", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.button11.Location = new System.Drawing.Point(3, 233);
+            this.button11.Location = new System.Drawing.Point(3, 230);
             this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(80, 43);
+            this.button11.Size = new System.Drawing.Size(80, 48);
             this.button11.TabIndex = 15;
             this.button11.Text = "7";
-            this.button11.UseVisualStyleBackColor = true;
+            this.button11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.button11.Click += new System.EventHandler(this.button11_Click);
             // 
             // button10
             // 
             this.button10.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button10.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.button10.Location = new System.Drawing.Point(175, 187);
+            this.button10.Location = new System.Drawing.Point(175, 184);
             this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(82, 40);
+            this.button10.Size = new System.Drawing.Size(82, 46);
             this.button10.TabIndex = 14;
             this.button10.Text = "*";
-            this.button10.UseVisualStyleBackColor = true;
+            this.button10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.button10.Click += new System.EventHandler(this.button10_Click);
             // 
             // button9
             // 
             this.button9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button9.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.button9.Location = new System.Drawing.Point(3, 187);
+            this.button9.Location = new System.Drawing.Point(3, 184);
             this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(80, 40);
+            this.button9.Size = new System.Drawing.Size(80, 46);
             this.button9.TabIndex = 12;
             this.button9.Text = "↺";
-            this.button9.UseVisualStyleBackColor = true;
+            this.button9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
             // button8
             // 
             this.button8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button8.Font = new System.Drawing.Font("Webdings", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.button8.Location = new System.Drawing.Point(89, 141);
+            this.button8.Location = new System.Drawing.Point(89, 138);
             this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(80, 40);
+            this.button8.Size = new System.Drawing.Size(80, 46);
             this.button8.TabIndex = 10;
             this.button8.Text = "6";
-            this.button8.UseVisualStyleBackColor = true;
+            this.button8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
             // button7
             // 
             this.button7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button7.Font = new System.Drawing.Font("Webdings", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.button7.Location = new System.Drawing.Point(175, 95);
+            this.button7.Location = new System.Drawing.Point(175, 92);
             this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(82, 40);
+            this.button7.Size = new System.Drawing.Size(82, 46);
             this.button7.TabIndex = 8;
             this.button7.Text = "4";
-            this.button7.UseVisualStyleBackColor = true;
+            this.button7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // button6
             // 
             this.button6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button6.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.button6.Location = new System.Drawing.Point(89, 95);
+            this.button6.Location = new System.Drawing.Point(89, 92);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(80, 40);
+            this.button6.Size = new System.Drawing.Size(80, 46);
             this.button6.TabIndex = 7;
             this.button6.Text = "OK";
-            this.button6.UseVisualStyleBackColor = true;
+            this.button6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // button5
             // 
             this.button5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button5.Font = new System.Drawing.Font("Webdings", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.button5.Location = new System.Drawing.Point(3, 95);
+            this.button5.Location = new System.Drawing.Point(3, 92);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(80, 40);
+            this.button5.Size = new System.Drawing.Size(80, 46);
             this.button5.TabIndex = 6;
             this.button5.Text = "3";
-            this.button5.UseVisualStyleBackColor = true;
+            this.button5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // button4
             // 
             this.button4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button4.Font = new System.Drawing.Font("Webdings", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.button4.Location = new System.Drawing.Point(89, 49);
+            this.button4.Location = new System.Drawing.Point(89, 46);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(80, 40);
+            this.button4.Size = new System.Drawing.Size(80, 46);
             this.button4.TabIndex = 4;
             this.button4.Text = "5";
-            this.button4.UseVisualStyleBackColor = true;
+            this.button4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // button3
             // 
             this.button3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button3.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.button3.Location = new System.Drawing.Point(175, 3);
+            this.button3.Location = new System.Drawing.Point(175, 0);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(82, 40);
+            this.button3.Size = new System.Drawing.Size(82, 46);
             this.button3.TabIndex = 2;
             this.button3.Text = "⌂";
-            this.button3.UseVisualStyleBackColor = true;
+            this.button3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button2
             // 
             this.button2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button2.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.button2.Location = new System.Drawing.Point(3, 3);
+            this.button2.Location = new System.Drawing.Point(3, 0);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(80, 40);
+            this.button2.Size = new System.Drawing.Size(80, 46);
             this.button2.TabIndex = 0;
             this.button2.Text = "←";
-            this.button2.UseVisualStyleBackColor = true;
+            this.button2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // label1
+            // checkBox1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Wingdings", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(12, 326);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(38, 26);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "7";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Enabled = false;
-            this.textBox1.Location = new System.Drawing.Point(56, 329);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(216, 23);
-            this.textBox1.TabIndex = 4;
-            this.textBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyDown);
-            this.textBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
+            this.checkBox1.Appearance = System.Windows.Forms.Appearance.Button;
+            this.checkBox1.Checked = true;
+            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox1.Location = new System.Drawing.Point(12, 325);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(260, 24);
+            this.checkBox1.TabIndex = 4;
+            this.checkBox1.Text = "Enable keyboard control";
+            this.checkBox1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 361);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.comboBox1);
+            this.KeyPreview = true;
             this.Name = "Form1";
             this.Text = "Form1";
             this.Shown += new System.EventHandler(this.Form1_Shown);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Form1_KeyPress);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyUp);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -275,20 +268,19 @@ namespace RokuRemote {
 
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button9;
-        private System.Windows.Forms.Button button8;
-        private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button10;
-        private System.Windows.Forms.Button button13;
-        private System.Windows.Forms.Button button12;
-        private System.Windows.Forms.Button button11;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label button2;
+        private System.Windows.Forms.Label button9;
+        private System.Windows.Forms.Label button8;
+        private System.Windows.Forms.Label button7;
+        private System.Windows.Forms.Label button6;
+        private System.Windows.Forms.Label button5;
+        private System.Windows.Forms.Label button4;
+        private System.Windows.Forms.Label button3;
+        private System.Windows.Forms.Label button10;
+        private System.Windows.Forms.Label button13;
+        private System.Windows.Forms.Label button12;
+        private System.Windows.Forms.Label button11;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }
 
