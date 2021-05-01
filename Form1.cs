@@ -45,6 +45,7 @@ namespace RokuRemote {
             comboBox1.Focus();
 
             groupBox1.Enabled = !checkBox1.Checked;
+            groupBox2.Enabled = !checkBox1.Checked;
         }
 
         private async void Form1_Shown(object sender, EventArgs e) {
@@ -73,10 +74,6 @@ namespace RokuRemote {
                     return false;
                 }, tokenSource.Token);
             } catch (TaskCanceledException ex) when (ex.CancellationToken == tokenSource.Token) { }
-        }
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e) {
-            tableLayoutPanel1.Enabled = CurrentDevice != null;
         }
 
         private async void button2_Click(object sender, EventArgs e) {
@@ -141,6 +138,10 @@ namespace RokuRemote {
                 Keys.Back => new PressedKey(SpecialKeys.Backspace),
 
                 Keys.MediaPlayPause => new PressedKey(SpecialKeys.Play),
+
+                Keys.PageUp => new PressedKey(SpecialKeys.ChannelUp),
+                Keys.PageDown => new PressedKey(SpecialKeys.ChannelDown),
+
                 _ => null,
             };
         }
@@ -204,17 +205,7 @@ namespace RokuRemote {
                 await CurrentDevice.Input.KeyPressAsync(new PressedKey(e.KeyChar));
         }
 
-        private static async IAsyncEnumerable<string> ReadAllLinesAsync(TextReader textReader) {
-            string line;
-
-            while (true) {
-                line = await textReader.ReadLineAsync();
-                if (line == null)
-                    break;
-
-                yield return line;
-            }
-        }
+        private const string ua = "RokuRemote/1.0 (https://www.github.com/IsaacSchemm/RokuRemote)";
 
         private static bool IsYouTube(Uri uri) {
             string h = $".{uri.Host}";
@@ -230,7 +221,6 @@ namespace RokuRemote {
                 return;
 
             Uri uri = new(textBox1.Text);
-            string ua = "RokuRemote/1.0 (https://www.github.com/IsaacSchemm/RokuRemote)";
 
             if (IsYouTube(uri)) {
                 var req1 = WebRequest.CreateHttp(uri);
@@ -265,7 +255,16 @@ namespace RokuRemote {
             var req = WebRequest.CreateHttp(new Uri(CurrentDevice.Location, $"/input/15985?t=v&u={Uri.EscapeDataString(uri.AbsoluteUri)}&k=(null)"));
             req.Method = "POST";
             req.UserAgent = ua;
-            req.Accept = "application/vnd.apple.mpegurl,application/dash+xml,application/vnd.ms-sstr+xml,video/*,audio/*";
+            using var resp = await req.GetResponseAsync();
+        }
+
+        private async void button14_Click(object sender, EventArgs e) {
+            if (CurrentDevice == null)
+                return;
+
+            var req = WebRequest.CreateHttp(new Uri(CurrentDevice.Location, $"/search/browse?keyword={Uri.EscapeDataString(textBox2.Text)}"));
+            req.Method = "POST";
+            req.UserAgent = ua;
             using var resp = await req.GetResponseAsync();
         }
     }
