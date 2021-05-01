@@ -5,9 +5,11 @@ using RokuDotNet.Client.Input;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -41,6 +43,8 @@ namespace RokuRemote {
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e) {
             comboBox1.Focus();
+
+            groupBox1.Enabled = !checkBox1.Checked;
         }
 
         private async void Form1_Shown(object sender, EventArgs e) {
@@ -200,19 +204,69 @@ namespace RokuRemote {
                 await CurrentDevice.Input.KeyPressAsync(new PressedKey(e.KeyChar));
         }
 
+        private static async IAsyncEnumerable<string> ReadAllLinesAsync(TextReader textReader) {
+            string line;
+
+            while (true) {
+                line = await textReader.ReadLineAsync();
+                if (line == null)
+                    break;
+
+                yield return line;
+            }
+        }
+
+        private static bool IsYouTube(Uri uri) {
+            string h = $".{uri.Host}";
+            if (h.EndsWith(".youtube.com", StringComparison.InvariantCultureIgnoreCase))
+                return true;
+            if (h.EndsWith(".youtu.be", StringComparison.InvariantCultureIgnoreCase))
+                return true;
+            return false;
+        }
+
         private async void button1_Click(object sender, EventArgs e) {
             if (CurrentDevice == null)
                 return;
 
-            try {
-                var req = WebRequest.CreateHttp(new Uri(CurrentDevice.Location, $"/input/15985?t=v&u={WebUtility.UrlEncode(textBox1.Text)}&k=(null)"));
-                req.Method = "POST";
-                req.UserAgent = "RokuRemote/1.0 (https://www.github.com/IsaacSchemm/RokuRemote)";
-                using var resp = await req.GetResponseAsync();
-            } catch (Exception ex) {
-                Console.Error.WriteLine(ex);
-                MessageBox.Show(this, "Could not send media to the device.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            Uri uri = new(textBox1.Text);
+            string ua = "RokuRemote/1.0 (https://www.github.com/IsaacSchemm/RokuRemote)";
+
+            if (IsYouTube(uri)) {
+                var req1 = WebRequest.CreateHttp(uri);
+                req1.Method = "GET";
+                req1.UserAgent = ua;
+                req1.Accept = "text/html";
+                using var resp1 = await req1.GetResponseAsync();
+                using var stream1 = resp1.GetResponseStream();
+                using var sr1 = new StreamReader(stream1);
+                string html = await sr1.ReadToEndAsync();
+
+                var match = Regex.Match(html, "<meta itemprop=['\"]videoId['\"] content=['\"]([^'\"]+)['\"]");
+                if (match.Success) {
+                    string id = match.Groups[1].Value;
+
+                    try {
+                        var req2 = WebRequest.CreateHttp(new Uri(CurrentDevice.Location, $"/launch/837?contentId={Uri.EscapeDataString(id)}"));
+                        req2.Method = "POST";
+                        req2.UserAgent = ua;
+                        using var resp2 = await req2.GetResponseAsync();
+                    } catch (WebException ex) when ((ex.Response as HttpWebResponse)?.StatusCode == HttpStatusCode.NotFound) {
+                        var req2 = WebRequest.CreateHttp(new Uri(CurrentDevice.Location, $"/install/837?contentId={Uri.EscapeDataString(id)}"));
+                        req2.Method = "POST";
+                        req2.UserAgent = ua;
+                        using var resp2 = await req2.GetResponseAsync();
+                    }
+
+                    return;
+                }
             }
+
+            var req = WebRequest.CreateHttp(new Uri(CurrentDevice.Location, $"/input/15985?t=v&u={Uri.EscapeDataString(uri.AbsoluteUri)}&k=(null)"));
+            req.Method = "POST";
+            req.UserAgent = ua;
+            req.Accept = "application/vnd.apple.mpegurl,application/dash+xml,application/vnd.ms-sstr+xml,video/*,audio/*";
+            using var resp = await req.GetResponseAsync();
         }
     }
 }
