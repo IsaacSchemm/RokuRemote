@@ -64,6 +64,7 @@ namespace RokuRemote {
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e) {
             tableLayoutPanel1.Enabled = CurrentDevice != null;
+            textBox1.Enabled = CurrentDevice != null;
         }
 
         private async void button2_Click(object sender, EventArgs e) {
@@ -112,6 +113,53 @@ namespace RokuRemote {
 
         private async void button13_Click(object sender, EventArgs e) {
             await CurrentDevice.Input.KeyPressAsync(new PressedKey(SpecialKeys.Forward));
+        }
+
+        private async void textBox1_KeyPress(object sender, KeyPressEventArgs e) {
+            e.Handled = true;
+
+            System.Diagnostics.Debug.WriteLine((int)e.KeyChar);
+
+            if (CurrentDevice == null) return;
+
+            if (char.IsControl(e.KeyChar)) return;
+
+            await CurrentDevice.Input.KeyPressAsync(new PressedKey(e.KeyChar));
+        }
+
+        private async void textBox1_KeyDown(object sender, KeyEventArgs e) {
+            if (CurrentDevice == null) return;
+
+            switch (e.KeyCode) {
+                case Keys.Up:
+                    e.Handled = true;
+                    await CurrentDevice.Input.KeyPressAsync(new PressedKey(SpecialKeys.Up));
+                    break;
+                case Keys.Down:
+                    e.Handled = true;
+                    await CurrentDevice.Input.KeyPressAsync(new PressedKey(SpecialKeys.Down));
+                    break;
+                case Keys.Left:
+                    e.Handled = true;
+                    await CurrentDevice.Input.KeyPressAsync(new PressedKey(SpecialKeys.Left));
+                    break;
+                case Keys.Right:
+                    e.Handled = true;
+                    await CurrentDevice.Input.KeyPressAsync(new PressedKey(SpecialKeys.Right));
+                    break;
+                case Keys.Enter:
+                    e.Handled = true;
+                    await CurrentDevice.Input.KeyPressAsync(new PressedKey(SpecialKeys.Select));
+                    break;
+                case Keys.Back:
+                    e.Handled = true;
+                    await CurrentDevice.Input.KeyPressAsync(new PressedKey(SpecialKeys.Backspace));
+                    break;
+                case Keys.Escape:
+                    e.Handled = true;
+                    await CurrentDevice.Input.KeyPressAsync(new PressedKey(SpecialKeys.Back));
+                    break;
+            }
         }
     }
 }

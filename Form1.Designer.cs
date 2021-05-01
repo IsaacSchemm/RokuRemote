@@ -38,6 +38,8 @@ namespace RokuRemote {
             this.button4 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -83,16 +85,16 @@ namespace RokuRemote {
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(260, 308);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(260, 279);
             this.tableLayoutPanel1.TabIndex = 2;
             // 
             // button13
             // 
             this.button13.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button13.Font = new System.Drawing.Font("Webdings", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.button13.Location = new System.Drawing.Point(175, 258);
+            this.button13.Location = new System.Drawing.Point(175, 233);
             this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(82, 47);
+            this.button13.Size = new System.Drawing.Size(82, 43);
             this.button13.TabIndex = 17;
             this.button13.Text = "8";
             this.button13.UseVisualStyleBackColor = true;
@@ -102,9 +104,9 @@ namespace RokuRemote {
             // 
             this.button12.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button12.Font = new System.Drawing.Font("Webdings", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.button12.Location = new System.Drawing.Point(89, 258);
+            this.button12.Location = new System.Drawing.Point(89, 233);
             this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(80, 47);
+            this.button12.Size = new System.Drawing.Size(80, 43);
             this.button12.TabIndex = 16;
             this.button12.Text = ";";
             this.button12.UseVisualStyleBackColor = true;
@@ -114,9 +116,9 @@ namespace RokuRemote {
             // 
             this.button11.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button11.Font = new System.Drawing.Font("Webdings", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.button11.Location = new System.Drawing.Point(3, 258);
+            this.button11.Location = new System.Drawing.Point(3, 233);
             this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(80, 47);
+            this.button11.Size = new System.Drawing.Size(80, 43);
             this.button11.TabIndex = 15;
             this.button11.Text = "7";
             this.button11.UseVisualStyleBackColor = true;
@@ -126,9 +128,9 @@ namespace RokuRemote {
             // 
             this.button10.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button10.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.button10.Location = new System.Drawing.Point(175, 207);
+            this.button10.Location = new System.Drawing.Point(175, 187);
             this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(82, 45);
+            this.button10.Size = new System.Drawing.Size(82, 40);
             this.button10.TabIndex = 14;
             this.button10.Text = "*";
             this.button10.UseVisualStyleBackColor = true;
@@ -138,9 +140,9 @@ namespace RokuRemote {
             // 
             this.button9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button9.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.button9.Location = new System.Drawing.Point(3, 207);
+            this.button9.Location = new System.Drawing.Point(3, 187);
             this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(80, 45);
+            this.button9.Size = new System.Drawing.Size(80, 40);
             this.button9.TabIndex = 12;
             this.button9.Text = "↺";
             this.button9.UseVisualStyleBackColor = true;
@@ -150,9 +152,9 @@ namespace RokuRemote {
             // 
             this.button8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button8.Font = new System.Drawing.Font("Webdings", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.button8.Location = new System.Drawing.Point(89, 156);
+            this.button8.Location = new System.Drawing.Point(89, 141);
             this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(80, 45);
+            this.button8.Size = new System.Drawing.Size(80, 40);
             this.button8.TabIndex = 10;
             this.button8.Text = "6";
             this.button8.UseVisualStyleBackColor = true;
@@ -162,9 +164,9 @@ namespace RokuRemote {
             // 
             this.button7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button7.Font = new System.Drawing.Font("Webdings", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.button7.Location = new System.Drawing.Point(175, 105);
+            this.button7.Location = new System.Drawing.Point(175, 95);
             this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(82, 45);
+            this.button7.Size = new System.Drawing.Size(82, 40);
             this.button7.TabIndex = 8;
             this.button7.Text = "4";
             this.button7.UseVisualStyleBackColor = true;
@@ -174,9 +176,9 @@ namespace RokuRemote {
             // 
             this.button6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button6.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.button6.Location = new System.Drawing.Point(89, 105);
+            this.button6.Location = new System.Drawing.Point(89, 95);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(80, 45);
+            this.button6.Size = new System.Drawing.Size(80, 40);
             this.button6.TabIndex = 7;
             this.button6.Text = "OK";
             this.button6.UseVisualStyleBackColor = true;
@@ -186,9 +188,9 @@ namespace RokuRemote {
             // 
             this.button5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button5.Font = new System.Drawing.Font("Webdings", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.button5.Location = new System.Drawing.Point(3, 105);
+            this.button5.Location = new System.Drawing.Point(3, 95);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(80, 45);
+            this.button5.Size = new System.Drawing.Size(80, 40);
             this.button5.TabIndex = 6;
             this.button5.Text = "3";
             this.button5.UseVisualStyleBackColor = true;
@@ -198,9 +200,9 @@ namespace RokuRemote {
             // 
             this.button4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button4.Font = new System.Drawing.Font("Webdings", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.button4.Location = new System.Drawing.Point(89, 54);
+            this.button4.Location = new System.Drawing.Point(89, 49);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(80, 45);
+            this.button4.Size = new System.Drawing.Size(80, 40);
             this.button4.TabIndex = 4;
             this.button4.Text = "5";
             this.button4.UseVisualStyleBackColor = true;
@@ -212,7 +214,7 @@ namespace RokuRemote {
             this.button3.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.button3.Location = new System.Drawing.Point(175, 3);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(82, 45);
+            this.button3.Size = new System.Drawing.Size(82, 40);
             this.button3.TabIndex = 2;
             this.button3.Text = "⌂";
             this.button3.UseVisualStyleBackColor = true;
@@ -224,17 +226,40 @@ namespace RokuRemote {
             this.button2.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.button2.Location = new System.Drawing.Point(3, 3);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(80, 45);
+            this.button2.Size = new System.Drawing.Size(80, 40);
             this.button2.TabIndex = 0;
             this.button2.Text = "←";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Wingdings", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label1.Location = new System.Drawing.Point(12, 326);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(38, 26);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "7";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Enabled = false;
+            this.textBox1.Location = new System.Drawing.Point(56, 329);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
+            this.textBox1.Size = new System.Drawing.Size(216, 23);
+            this.textBox1.TabIndex = 4;
+            this.textBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyDown);
+            this.textBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 361);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.comboBox1);
             this.Name = "Form1";
@@ -242,6 +267,7 @@ namespace RokuRemote {
             this.Shown += new System.EventHandler(this.Form1_Shown);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -261,6 +287,8 @@ namespace RokuRemote {
         private System.Windows.Forms.Button button13;
         private System.Windows.Forms.Button button12;
         private System.Windows.Forms.Button button11;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
 
