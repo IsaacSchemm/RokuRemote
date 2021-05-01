@@ -137,7 +137,7 @@ namespace RokuRemote {
 
                 Keys.MediaPreviousTrack => new PressedKey(SpecialKeys.Reverse),
                 Keys.MediaPlayPause => new PressedKey(SpecialKeys.Play),
-                Keys.MediaNextTrack => new PressedKey(SpecialKeys.Forward)
+                Keys.MediaNextTrack => new PressedKey(SpecialKeys.Forward),
                 _ => null,
             };
         }
