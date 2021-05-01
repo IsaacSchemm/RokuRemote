@@ -1,4 +1,5 @@
 ﻿using CrossInterfaceRokuDeviceDiscovery;
+using Microsoft.Web.WebView2.WinForms;
 using RokuDotNet.Client;
 using RokuDotNet.Client.Apps;
 using RokuDotNet.Client.Input;
@@ -200,15 +201,50 @@ namespace RokuRemote {
                 await CurrentDevice.Input.KeyPressAsync(new PressedKey(e.KeyChar));
         }
 
+        private static bool IsHtml(string contentType) {
+            return contentType != null && new[] {
+                "text/html",
+                "application/xhtml+xml"
+            }.Any(s => contentType.StartsWith(s, StringComparison.InvariantCultureIgnoreCase));
+        }
+
+        private async void PlayMedia(Uri url) {
+            try {
+                var req2 = WebRequest.CreateHttp(new Uri(CurrentDevice.Location, $"/input/15985?t=v&u={WebUtility.UrlEncode(url.AbsoluteUri)}&k=(null)"));
+                req2.Method = "POST";
+                req2.UserAgent = "RokuRemote/1.0 (https://www.github.com/IsaacSchemm/RokuRemote)";
+                using var resp = await req2.GetResponseAsync();
+            } catch (Exception ex) {
+                Console.Error.WriteLine(ex);
+                MessageBox.Show(this, "Could not send request to play media.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private async void button1_Click(object sender, EventArgs e) {
             if (CurrentDevice == null)
                 return;
 
             try {
-                var req = WebRequest.CreateHttp(new Uri(CurrentDevice.Location, $"/input/15985?t=v&u={WebUtility.UrlEncode(textBox1.Text)}&k=(null)"));
-                req.Method = "POST";
-                req.UserAgent = "RokuRemote/1.0 (https://www.github.com/IsaacSchemm/RokuRemote)";
-                using var resp = await req.GetResponseAsync();
+                Uri url = new(textBox1.Text);
+
+                string contentType;
+                try {
+                    var req1 = WebRequest.CreateHttp(url);
+                    req1.Method = "HEAD";
+                    using var resp1 = await req1.GetResponseAsync();
+                    contentType = resp1.ContentType;
+                } catch (WebException ex) when ((ex.Response as HttpWebResponse)?.StatusCode == HttpStatusCode.MethodNotAllowed) {
+                    contentType = null;
+                }
+
+                if (IsHtml(contentType)) {
+                    using var dialog = new Form2();
+                    dialog.Navigate(url);
+                    dialog.PlayRequested += PlayMedia;
+                    dialog.ShowDialog(this);
+                } else {
+                    PlayMedia(url);
+                }
             } catch (Exception ex) {
                 Console.Error.WriteLine(ex);
                 MessageBox.Show(this, "Could not send media to the device.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
